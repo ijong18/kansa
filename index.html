@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Kansa 🤍</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#16050d;
+  color:#fff;
+  font-family:Georgia,"Times New Roman",serif;
+  overflow-x:hidden
+}
+
+/* PASSWORD */
+#lock{
+  position:fixed;inset:0;z-index:999;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(circle at 50% 30%,#ff8fb5 0%,#9b315a 35%,#260913 75%,#100208)
+}
+.lockbox{
+  width:88%;max-width:400px;padding:38px 25px;text-align:center;
+  border:1px solid rgba(255,255,255,.3);border-radius:30px;
+  background:rgba(45,8,23,.62);
+  backdrop-filter:blur(20px);
+  box-shadow:0 0 80px rgba(255,105,160,.35)
+}
+.lockicon{font-size:45px;margin-bottom:18px}
+.lockbox h1{font-size:27px;margin-bottom:8px}
+.lockbox p{color:#ffd6e4;font:13px Arial;margin-bottom:25px}
+input{
+  width:100%;padding:16px;border-radius:16px;
+  border:1px solid rgba(255,190,215,.4);
+  background:rgba(0,0,0,.25);color:#fff;
+  outline:none;text-align:center;font-size:16px
+}
+input::placeholder{color:#eeb5c9}
+button{cursor:pointer}
+.unlock{
+  width:100%;margin-top:13px;padding:16px;border:0;border-radius:16px;
+  background:linear-gradient(135deg,#ffb3cb,#fff,#ff80aa);
+  color:#5b1632;font-weight:bold;font-family:Arial
+}
+#error{display:none;color:#ffb0c9;font:13px Arial;margin-top:12px}
+
+/* MAIN */
+#main{display:none}
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:30px 20px;
+  background:
+    radial-gradient(circle at 50% 15%,rgba(255,190,215,.4),transparent 25%),
+    radial-gradient(circle at 20% 80%,rgba(255,100,160,.25),transparent 30%),
+    linear-gradient(150deg,#ff8fb8,#bd416e 45%,#4b1228);
+}
+.hero-content{max-width:650px}
+.label{
+  color:#ffe6ef;letter-spacing:5px;
+  font:11px Arial;margin-bottom:20px
+}
+.hero h1{
+  font-size:clamp(45px,12vw,82px);line-height:.95;margin-bottom:22px;
+  text-shadow:0 5px 35px rgba(80,0,30,.35)
+}
+.intro{color:#ffe9f1;font:15px Arial;line-height:1.8}
+.open{
+  margin-top:30px;padding:14px 27px;border-radius:50px;
+  border:1px solid rgba(255,255,255,.6);
+  background:rgba(255,255,255,.13);
+  color:#fff;font-size:14px;
+  backdrop-filter:blur(10px)
+}
+
+/* SURAT */
+.letter{
+  min-height:100vh;
+  padding:70px 18px 100px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(255,174,203,.35),transparent 30%),
+    linear-gradient(180deg,#8f2850,#3b0d20 60%,#18050d)
+}
+.paper{
+  max-width:720px;margin:auto;padding:30px 22px;
+  border:1px solid rgba(255,210,225,.25);
+  border-radius:28px;
+  background:rgba(40,7,22,.55);
+  backdrop-filter:blur(15px);
+  box-shadow:0 25px 100px rgba(0,0,0,.45)
+}
+.paper h2{
+  color:#ffd5e3;font-size:26px;margin-bottom:28px;text-align:center
+}
+
+/* FOTO SLIDESHOW */
+.photo-box{
+  width:100%;
+  max-width:360px;
+  height:360px;
+  margin:0 auto 35px;
+  padding:4px;
+  border-radius:25px;
+  background:linear-gradient(135deg,#fff,#ff8eb6,#ffd4e3);
+  box-shadow:0 10px 50px rgba(255,100,160,.3)
+}
+.photo-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:22px;
+  display:block;
+  transition:opacity .5s,transform .5s
+}
+.fade{
+  opacity:0;
+  transform:scale(1.03)
+}
+
+.message{
+  color:#ffe9f1;
+  font-size:16px;
+  line-height:2
+}
+#typing{white-space:pre-wrap}
+.cursor{
+  display:inline-block;width:2px;height:18px;
+  background:#ffd3e2;margin-left:3px;
+  animation:blink .7s infinite
+}
+@keyframes blink{50%{opacity:0}}
+
+#choice{
+  display:none;text-align:center;margin-top:50px;
+  padding-top:35px;border-top:1px solid rgba(255,255,255,.15)
+}
+#choice h3{
+  font-size:20px;line-height:1.6;margin-bottom:25px
+}
+.choice-btn{
+  padding:13px 30px;margin:5px;border-radius:50px;
+  border:1px solid rgba(255,255,255,.4);
+  background:rgba(255,255,255,.1);
+  color:#fff;font-size:15px
+}
+#answer{
+  display:none;text-align:center;margin-top:28px;
+  color:#ffd6e4;font-size:17px;line-height:1.8
+}
+.wa{
+  display:inline-block;margin-top:18px;padding:13px 24px;
+  border-radius:50px;background:#fff;color:#751c42;
+  text-decoration:none;font:14px Arial;font-weight:bold
+}
+footer{text-align:center;padding:35px;color:#e2a2b9;font:11px Arial}
+
+/* HATI */
+.heart{
+  position:fixed;
+  color:rgba(255,220,232,.45);
+  font-size:15px;
+  pointer-events:none;
+  animation:float 7s linear forwards;
+  z-index:1
+}
+@keyframes float{
+  from{transform:translateY(110vh) rotate(0);opacity:0}
+  15%{opacity:1}
+  to{transform:translateY(-15vh) rotate(360deg);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div id="lock">
+  <div class="lockbox" id="lockbox">
+    <div class="lockicon">🔐</div>
+    <h1>Private Message</h1>
+    <p>Pesan ini dibuat khusus untuk seseorang.</p>
+    <input id="password" type="password" placeholder="Masukkan password">
+    <button class="unlock" onclick="unlock()">BUKA PESAN</button>
+    <div id="error">Password salah.</div>
+  </div>
+</div>
+
+<div id="main">
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="label">A SPECIAL MESSAGE FOR YOU</div>
+    <h1>Happy Birthday<br>🤍</h1>
+    <div class="intro">
+      Ada sesuatu yang ingin aku sampaikan<br>
+      khusus untuk kamu.
+    </div>
+    <button class="open" onclick="openLetter()">Buka surat 💌</button>
+  </div>
+</section>
+
+<section class="letter" id="letter">
+
+<div class="paper">
+
+<h2>Untuk Kansa 🤍</h2>
+
+<!-- FOTO AKAN BERGANTI SETIAP 3 DETIK -->
+<div class="photo-box">
+  <img id="slideshow"
+       src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800">
+</div>
+
+<div class="message">
+<span id="typing"></span><span class="cursor"></span>
+</div>
+
+<div id="choice">
+  <h3>Mau ga kamu temuin aku di ulang tahun kamu ini? 🤍</h3>
+
+  <button class="choice-btn" onclick="yesAnswer()">Mau</button>
+  <button class="choice-btn" id="noBtn" onclick="noAnswer()">Engga</button>
+
+  <div id="answer">
+    Makasih udah mau yaa 🤍<br>
+    Kalo mau, buka WA aku yaaa
+    <br>
+    <a class="wa" id="waLink" href="#" target="_blank">
+      Buka WhatsApp
+    </a>
+  </div>
+</div>
+
+</div>
+
+<footer>Made specially for Kansa ✦</footer>
+
+</section>
+</div>
+
+<script>
+
+const PASSWORD="123456";
+
+/* MASUKKAN NOMOR WA KAMU DI SINI */
+const WA_NUMBER="6280000000000";
+
+/* GANTI LINK FOTO-FOTO INI DENGAN FOTO KAMU */
+const photos=[
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=800",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800",
+  "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800"
+];
+
+const text=`Happy birthday yaa, Kansa 🎂
+dan selamat juga buat graduation-nya 🎓
+
+Walaupun kita udah lama banget ga kontak, entah kenapa aku tetep pengen ngucapin ini ke kamu. Aku seneng lihat kamu bisa sampai di titik ini, setelah semua hal yang mungkin udah kamu lewatin selama sekolah.
+
+Semoga di umur yang baru ini, kamu selalu dikasih kesehatan, kebahagiaan, dan dikelilingi orang-orang baik. Semoga semua yang lagi kamu perjuangin bisa berjalan lancar. Aku juga doain semoga kamu betah di sekolah baru kamu, bisa ketemu teman-teman yang baik, dan semoga tempat itu jadi langkah awal buat kamu meraih semua cita-cita yang selama ini kamu impiin. Walaupun aku cuma bisa bantu lewat doa dari jauh, aku bener-bener berharap semua hal baik datang ke kamu dan masa depan yang kamu inginkan bisa tercapai.
+
+Aku juga ada niat buat ngasih kamu bunga terbesar yang aku beli khusus buat kamu. Cuma sekarang rumah kamu udah pindah dan jadi cukup jauh. Tapi kalau kamu ga keberatan, aku masih pengen ngasih itu ke kamu kok.
+
+Makasih juga karena dulu pernah jadi bagian dari cerita yang sampai sekarang masih aku inget. Mungkin sekarang semuanya udah beda dan kita udah jarang, bahkan hampir ga pernah ngobrol lagi. Tapi aku tetep berharap kamu bahagia terus, di mana pun dan sama siapa pun nanti 🤍
+
+Dan aku juga bakal selalu inget sama kamu yang dulu pernah ngehargain pemberian kecil dari aku, walaupun itu ga seberapa. Tapi jujur, aku seneng banget waktu kamu nerima itu, apalagi sampai kamu makan juga 😊
+
+Terus momen yang paling ga bakal aku lupain itu pas foto bareng sama kamu, dan waktu aku ngasih kamu makan di depan temen-temen aku. Walaupun kamu malu pas foto sama aku, aku tetep seneng dan tetep ngehargain kamu kok.
+
+Jujur aja, semenjak kamu pergi dari hidup aku, ada rasa kehilangan yang cukup besar. Bukan cuma karena kita udah jarang ngobrol, tapi karena aku kehilangan sosok perempuan yang menurut aku baik banget. Kamu mungkin ga sadar, tapi dulu kehadiran kamu pernah bikin hari-hari aku terasa lebih berwarna.
+
+Ada banyak hal yang berubah setelah itu, tapi entah kenapa kenangan tentang kamu masih sering muncul begitu aja. Kadang pas lagi denger lagu tertentu, lewat tempat tertentu, atau bahkan pas lagi ngelakuin hal-hal sederhana, aku jadi keinget kamu lagi.
+
+Aku juga sadar kalau waktu ga bisa diputar kembali dan setiap orang pasti akan melanjutkan hidupnya masing-masing. Karena itu aku ga pernah mau maksa perasaan aku ke kamu. Aku cuma pengen jujur kalau sampai sekarang, kamu masih jadi salah satu orang yang paling berkesan dalam hidup aku.
+
+Mungkin aku bukan orang terbaik yang pernah hadir di hidup kamu, dan mungkin juga aku pernah melakukan kesalahan yang bikin semuanya berubah. Kalau memang ada hal yang pernah bikin kamu kecewa, aku minta maaf. Seandainya waktu bisa diulang, ada banyak hal yang ingin aku perbaiki supaya semuanya bisa berjalan lebih baik.
+
+Dan aku juga minta maaf atas semua hal yang mungkin pernah bikin kamu ga nyaman, kecewa, atau memilih menjauh dari aku. Sampai sekarang aku masih sering mikir, mungkin ada banyak hal yang seharusnya bisa aku lakukan dengan lebih baik waktu itu.
+
+Aku juga minta maaf kalau pernah ada omongan, sikap, atau kesalahpahaman yang bikin pandangan kamu ke aku berubah. Jujur, sampai sekarang aku masih nyesel karena kita berakhir jadi asing seperti ini. Bukan karena aku marah sama keadaan, tapi karena aku kehilangan seseorang yang pernah aku anggap spesial.
+
+Kalau memang dulu aku pernah membuat kamu kecewa, aku benar-benar minta maaf dari hati yang paling dalam. Aku ga bisa mengubah masa lalu, tapi aku berharap suatu hari nanti kamu bisa memaafkan semua kesalahan aku dan mengingat aku sebagai seseorang yang pernah tulus peduli sama kamu.
+
+Aku juga ingin minta maaf karena mungkin selama ini aku masih sulit melupakan kamu. Bukan karena aku ingin mengganggu hidup kamu, tapi karena kenangan tentang kamu memang punya tempat tersendiri di hati aku.
+
+Aku juga pengen berterima kasih karena secara ga langsung kamu pernah ngajarin aku banyak hal. Tentang menghargai seseorang, tentang perasaan, dan tentang bagaimana rasanya benar-benar peduli sama seseorang. Semua itu bakal selalu aku inget.
+
+Sebenernya sampai sekarang aku juga masih nyimpen rasa itu, walaupun mungkin semuanya udah berubah dan aku sadar kita udah punya jalan masing-masing. Aku ga berharap lebih atau maksa apa pun, aku cuma pengen kamu tau kalau kamu pernah jadi seseorang yang berarti buat aku, dan mungkin akan selalu begitu 🫶
+
+Tapi kalau suatu hari nanti kamu masih mau kasih aku sedikit kesempatan, aku pengen perbaiki semuanya pelan-pelan ☺️
+
+Aku ga tau bagaimana cerita kita ke depannya. Tapi apa pun yang terjadi, aku akan tetap mendukung dan mendoakan yang terbaik untuk kamu dari jauh. Karena melihat kamu bahagia, meskipun bukan sama aku, tetap jadi sesuatu yang bikin aku ikut senang.
+
+Dan kalau suatu hari nanti takdir mempertemukan kita lagi dalam keadaan yang lebih baik, aku berharap kita bisa ngobrol seperti dulu, tanpa rasa canggung, dan mungkin saling mengenang semua cerita yang pernah kita lewati.
+
+Pokoknya bahagia selalu ya, Kansa, kapan pun dan di mana pun itu. Dan semoga laki-laki yang nanti dapetin hati kamu adalah orang yang benar-benar bisa jagain dan bahagiain kamu.
+
+"You are always in my heart" 🤍
+
+Happy birthday and happy graduation 🎉
+Proud of you, always 🤍`;
+
+/* PASSWORD */
+function unlock(){
+  const p=document.getElementById("password");
+  const e=document.getElementById("error");
+
+  if(p.value===PASSWORD){
+    document.getElementById("lock").style.display="none";
+    document.getElementById("main").style.display="block";
+    startHearts();
+  }else{
+    e.style.display="block";
+    p.value="";
+  }
+}
+
+document.getElementById("password").addEventListener("keydown",e=>{
+  if(e.key==="Enter")unlock();
+});
+
+/* BUKA SURAT */
+let started=false;
+
+function openLetter(){
+  document.getElementById("letter").scrollIntoView({
+    behavior:"smooth"
+  });
+
+  startSlideshow();
+
+  setTimeout(()=>{
+    typeText();
+  },800);
+}
+
+/* FOTO GANTI SETIAP 3 DETIK */
+let photoIndex=0;
+let slideStarted=false;
+
+function startSlideshow(){
+  if(slideStarted)return;
+  slideStarted=true;
+
+  setInterval(()=>{
+    const img=document.getElementById("slideshow");
+
+    img.classList.add("fade");
+
+    setTimeout(()=>{
+      photoIndex=(photoIndex+1)%photos.length;
+      img.src=photos[photoIndex];
+      img.onload=()=>img.classList.remove("fade");
+    },500);
+
+  },3000);
+}
+
+/* TYPING */
+let i=0;
+
+function typeText(){
+  if(started)return;
+  started=true;
+
+  const el=document.getElementById("typing");
+
+  function type(){
+    if(i<text.length){
+      el.textContent+=text.charAt(i);
+      i++;
+
+      let delay=28;
+
+      if(text.charAt(i-1)==="\n")delay=300;
+      if(text.charAt(i-1)===".")delay=150;
+      if(text.charAt(i-1)===",")delay=90;
+
+      setTimeout(type,delay);
+    }else{
+      document.querySelector(".cursor").style.display="none";
+
+      setTimeout(()=>{
+        document.getElementById("choice").style.display="block";
+        document.getElementById("choice").scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+      },800);
+    }
+  }
+
+  type();
+}
+
+/* MAU */
+function yesAnswer(){
+  document.getElementById("answer").style.display="block";
+  document.querySelectorAll(".choice-btn").forEach(b=>{
+    b.style.display="none";
+  });
+
+  document.getElementById("waLink").href=
+    "https://wa.me/"+WA_NUMBER;
+
+  document.getElementById("answer").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+}
+
+/* ENGGAK */
+function noAnswer(){
+  document.getElementById("noBtn").style.display="none";
+}
+
+/* HATI MELAYANG */
+function startHearts(){
+  setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML=["♡","♥","🤍","💕"][Math.floor(Math.random()*4)];
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(12+Math.random()*18)+"px";
+    h.style.animationDuration=(5+Math.random()*4)+"s";
+    document.body.appendChild(h);
+
+    setTimeout(()=>h.remove(),9000);
+  },700);
+}
+
+</script>
+
+</body>
+</html>
